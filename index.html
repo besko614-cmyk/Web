@@ -3,399 +3,477 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1512" />
     <meta
       name="description"
-      content="A static demonstration of a single free public video release while the wider catalog remains protected."
+      content="A polished static demonstration of one free public video release while the rest of a media catalog remains protected."
     />
-    <title>Lumen Archive — Public Release Demo</title>
+    <title>Lumen Archive — Bloom after dark</title>
     <style>
       :root {
-        color-scheme: dark;
-        --ink: #f4f0e8;
-        --muted: #aaa79f;
-        --night: #101817;
-        --surface: rgba(28, 40, 38, 0.78);
-        --surface-strong: #1a2725;
-        --line: rgba(244, 240, 232, 0.15);
-        --sun: #ecc16c;
-        --glow: #a8c6ad;
-        --rose: #e4a5a0;
-        --radius: 24px;
+        --canvas: #0b1512;
+        --canvas-deep: #06100d;
+        --panel: #12221d;
+        --panel-soft: rgba(25, 43, 36, 0.64);
+        --ink: #f5f1e8;
+        --paper: #ece6d8;
+        --muted: #b6b9ae;
+        --muted-dark: #78847b;
+        --moss: #b9d0a5;
+        --citrus: #f0c56a;
+        --coral: #dd9a85;
+        --line: rgba(245, 241, 232, 0.15);
+        --line-strong: rgba(245, 241, 232, 0.28);
+        --display: Iowan Old Style, Baskerville, "Times New Roman", serif;
+        --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --radius-lg: 26px;
+        --radius-md: 16px;
+        --shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
       }
 
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
       body {
-        margin: 0;
         min-width: 320px;
+        margin: 0;
         color: var(--ink);
         background:
-          radial-gradient(circle at 85% -5%, rgba(91, 142, 118, 0.29), transparent 28rem),
-          radial-gradient(circle at 5% 20%, rgba(228, 165, 160, 0.12), transparent 30rem),
-          var(--night);
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          radial-gradient(circle at 7% 16%, rgba(221, 154, 133, 0.15), transparent 31rem),
+          radial-gradient(circle at 90% 8%, rgba(146, 186, 139, 0.17), transparent 33rem),
+          var(--canvas);
+        font-family: var(--sans);
       }
-
+      body:has(dialog[open]) { overflow: hidden; }
       a { color: inherit; }
       button, a { -webkit-tap-highlight-color: transparent; }
+      button { font: inherit; }
+      :focus-visible { outline: 3px solid var(--citrus); outline-offset: 4px; }
       .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
       .eyebrow {
         display: inline-flex;
         align-items: center;
         gap: 0.58rem;
-        color: var(--sun);
-        font-size: 0.75rem;
+        margin: 0;
+        color: var(--citrus);
+        font-size: 0.7rem;
         font-weight: 800;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.15em;
         text-transform: uppercase;
       }
       .eyebrow::before {
-        width: 0.56rem;
-        height: 0.56rem;
+        width: 0.46rem;
+        height: 0.46rem;
         border-radius: 50%;
         background: currentColor;
-        box-shadow: 0 0 0 5px rgba(236, 193, 108, 0.14);
+        box-shadow: 0 0 0 4px rgba(240, 197, 106, 0.14);
         content: "";
       }
-
-      .notice {
-        border-bottom: 1px solid var(--line);
-        background: rgba(7, 13, 12, 0.48);
-      }
-      .notice .shell {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.6rem;
-        min-height: 42px;
-        color: #d8d5cd;
-        font-size: 0.8rem;
-        text-align: center;
-      }
-      .notice strong { color: var(--sun); }
-
-      header { padding: 30px 0 24px; }
-      .nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-      }
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.85rem;
-        color: var(--ink);
-        font-size: 0.86rem;
+      .skip-link {
+        position: fixed;
+        z-index: 100;
+        top: 0.75rem;
+        left: 0.75rem;
+        padding: 0.75rem 1rem;
+        transform: translateY(-150%);
+        border-radius: 7px;
+        color: #172017;
+        background: var(--citrus);
         font-weight: 800;
-        letter-spacing: 0.1em;
-        text-decoration: none;
-        text-transform: uppercase;
-      }
-      .brand-mark {
-        position: relative;
-        width: 30px;
-        height: 30px;
-        overflow: hidden;
-        border: 1px solid var(--sun);
-        border-radius: 50%;
-      }
-      .brand-mark::before, .brand-mark::after {
-        position: absolute;
-        border-radius: 50%;
-        content: "";
-      }
-      .brand-mark::before { inset: 6px; background: var(--sun); }
-      .brand-mark::after { width: 19px; height: 19px; right: -6px; bottom: -4px; background: var(--night); }
-      .nav-links { display: flex; align-items: center; gap: 1.55rem; }
-      .nav-links a {
-        color: var(--muted);
-        font-size: 0.88rem;
-        font-weight: 650;
         text-decoration: none;
       }
-      .nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); }
-      .catalog-lock {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 0.48rem 0.75rem;
-        border: 1px solid var(--line);
-        border-radius: 99px;
-        color: var(--muted);
-        font-size: 0.72rem;
-        font-weight: 750;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-      .lock-icon { width: 0.7rem; height: 0.62rem; border: 1.5px solid currentColor; border-radius: 2px; }
-      .lock-icon::before { display: block; width: 0.38rem; height: 0.36rem; margin: -0.43rem auto 0; border: 1.5px solid currentColor; border-bottom: 0; border-radius: 8px 8px 0 0; content: ""; }
+      .skip-link:focus { transform: translateY(0); }
 
-      main { padding: 22px 0 80px; }
-      .hero { display: grid; grid-template-columns: minmax(0, 0.88fr) minmax(390px, 1.12fr); gap: clamp(2.4rem, 7vw, 6.8rem); align-items: center; min-height: 540px; }
+      .prototype-bar { border-bottom: 1px solid var(--line); background: rgba(4, 12, 9, 0.5); }
+      .prototype-bar .shell { display: flex; align-items: center; justify-content: center; min-height: 39px; color: #c6c9be; font-size: 0.76rem; text-align: center; }
+      .prototype-bar strong { margin-right: 0.4rem; color: var(--citrus); }
+
+      .site-header { padding: 20px 0 10px; }
+      .nav { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+      .brand { display: inline-flex; align-items: center; gap: 0.72rem; color: var(--ink); font-size: 0.79rem; font-weight: 850; letter-spacing: 0.13em; text-decoration: none; text-transform: uppercase; }
+      .brand-mark { position: relative; width: 30px; height: 30px; overflow: hidden; border: 1px solid var(--citrus); border-radius: 50%; }
+      .brand-mark::before { position: absolute; inset: 6px; border-radius: 50%; background: var(--citrus); content: ""; }
+      .brand-mark::after { position: absolute; right: -5px; bottom: -5px; width: 19px; height: 19px; border-radius: 50%; background: var(--canvas); content: ""; }
+      .nav-links { display: flex; align-items: center; gap: 1.65rem; }
+      .nav-links > a { color: var(--muted); font-size: 0.82rem; font-weight: 720; text-decoration: none; }
+      .nav-links > a:hover { color: var(--ink); }
+      .library-lock { display: inline-flex; align-items: center; gap: 0.48rem; padding: 0.47rem 0.7rem; border: 1px solid var(--line); border-radius: 100px; color: #c8c8bd !important; font-size: 0.7rem !important; letter-spacing: 0.08em; text-transform: uppercase; }
+      .lock-icon { position: relative; display: inline-block; width: 0.72rem; height: 0.58rem; border: 1.5px solid currentColor; border-radius: 2px; }
+      .lock-icon::before { position: absolute; top: -0.47rem; left: 50%; width: 0.37rem; height: 0.42rem; transform: translateX(-50%); border: 1.5px solid currentColor; border-bottom: 0; border-radius: 6px 6px 0 0; content: ""; }
+
+      main { overflow: hidden; }
+      .hero { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2.6rem, 7vw, 6.4rem); align-items: center; min-height: 610px; padding: 54px 0 78px; }
       h1, h2, h3, p { margin-top: 0; }
-      h1 {
-        max-width: 10ch;
-        margin: 1.15rem 0 1.5rem;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(3.2rem, 6.1vw, 5.8rem);
-        font-weight: 500;
-        letter-spacing: -0.065em;
-        line-height: 0.92;
-      }
-      .hero-copy > p:not(.eyebrow) { max-width: 48ch; color: #c8c6be; font-size: 1.05rem; line-height: 1.72; }
-      .detail-line { display: flex; flex-wrap: wrap; gap: 0.8rem 1.25rem; margin: 1.75rem 0 2rem; color: var(--muted); font-size: 0.86rem; }
-      .detail-line span { display: inline-flex; align-items: center; gap: 0.42rem; }
-      .detail-line span::before { width: 4px; height: 4px; border-radius: 100%; background: var(--sun); content: ""; }
-      .button-row { display: flex; flex-wrap: wrap; gap: 0.85rem; }
-      .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.62rem;
-        min-height: 48px;
-        padding: 0.75rem 1.15rem;
-        border: 1px solid transparent;
-        border-radius: 9px;
-        font: inherit;
-        font-size: 0.88rem;
-        font-weight: 780;
-        text-decoration: none;
-        transition: transform 170ms ease, background 170ms ease, border-color 170ms ease, opacity 170ms ease;
-      }
+      h1 { max-width: 8ch; margin: 1rem 0 1.4rem; font-family: var(--display); font-size: clamp(3.55rem, 7vw, 6.7rem); font-weight: 400; letter-spacing: -0.075em; line-height: 0.86; }
+      .hero-copy > p:not(.eyebrow) { max-width: 44ch; color: #d1d2c9; font-size: 1.02rem; line-height: 1.74; }
+      .release-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.65rem 0 2rem; padding: 0; list-style: none; }
+      .release-meta li { padding: 0.42rem 0.62rem; border: 1px solid var(--line); border-radius: 100px; color: #c8cbc0; font-size: 0.73rem; font-weight: 710; }
+      .release-meta li:first-child { border-color: rgba(240, 197, 106, 0.45); color: var(--citrus); }
+      .action-row { display: flex; flex-wrap: wrap; gap: 0.72rem; }
+      .button { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 48px; padding: 0.72rem 1rem; border: 1px solid transparent; border-radius: 9px; font-size: 0.84rem; font-weight: 800; line-height: 1; text-decoration: none; transition: transform 170ms ease, background 170ms ease, border-color 170ms ease, opacity 170ms ease; }
       .button:hover:not([aria-disabled="true"]), .button:focus-visible:not([aria-disabled="true"]) { transform: translateY(-2px); }
-      .button-primary { color: #171a14; background: var(--sun); }
-      .button-primary:hover, .button-primary:focus-visible { background: #f7d484; }
-      .button-secondary { border-color: rgba(244, 240, 232, 0.35); color: var(--ink); background: rgba(244, 240, 232, 0.04); }
-      .button-secondary:hover, .button-secondary:focus-visible { border-color: var(--ink); background: rgba(244, 240, 232, 0.09); }
+      .button-primary { color: #182017; background: var(--citrus); }
+      .button-primary:hover, .button-primary:focus-visible { background: #f8d989; }
+      .button-secondary { border-color: var(--line-strong); color: var(--ink); background: rgba(255, 255, 255, 0.035); }
+      .button-secondary:hover, .button-secondary:focus-visible { border-color: var(--ink); background: rgba(255, 255, 255, 0.09); }
+      .button-tertiary { padding: 0.75rem 0.3rem; color: var(--moss); background: transparent; }
       .button[aria-disabled="true"] { cursor: wait; opacity: 0.48; pointer-events: none; }
-      .button svg { width: 0.95rem; height: 0.95rem; fill: currentColor; }
+      .button svg { width: 1rem; height: 1rem; fill: currentColor; }
 
-      .release-frame {
-        position: relative;
-        overflow: hidden;
-        border: 1px solid rgba(244, 240, 232, 0.2);
-        border-radius: var(--radius);
-        background: #0a100e;
-        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.34);
+      .media-stage { position: relative; min-height: 496px; }
+      .media-stage::before { position: absolute; z-index: -1; top: -32px; right: -25px; width: 230px; height: 230px; border: 1px solid rgba(240, 197, 106, 0.16); border-radius: 50%; box-shadow: -30px 25px 0 -1px rgba(221, 154, 133, 0.11); content: ""; }
+      .film-card { position: absolute; inset: 0 0 0 40px; overflow: hidden; border: 1px solid rgba(245, 241, 232, 0.2); border-radius: var(--radius-lg); background: linear-gradient(145deg, #1d4231, #0a1410 72%); box-shadow: var(--shadow); }
+      .film-card::before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(180deg, rgba(3, 9, 7, 0.14), rgba(3, 9, 7, 0.12) 43%, rgba(3, 9, 7, 0.92)); content: ""; pointer-events: none; }
+      .film-card::after { position: absolute; z-index: 1; top: 18%; left: -7%; width: 84%; height: 64%; transform: rotate(-24deg); border-radius: 52% 48% 54% 46%; background: radial-gradient(ellipse at center, rgba(195, 228, 172, 0.5), rgba(83, 126, 89, 0.09) 45%, transparent 69%); filter: blur(14px); content: ""; pointer-events: none; }
+      .film-card video { position: absolute; z-index: 0; display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0.74; mix-blend-mode: screen; filter: saturate(0.8) contrast(1.1) brightness(0.85); }
+      .card-top, .card-bottom { position: absolute; z-index: 3; left: 1.35rem; right: 1.35rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+      .card-top { top: 1.25rem; }
+      .card-bottom { bottom: 1.25rem; align-items: flex-end; }
+      .now-playing { display: inline-flex; align-items: center; gap: 0.48rem; color: #e5e5d8; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+      .pulse { width: 0.52rem; height: 0.52rem; border-radius: 100%; background: #dfeccb; box-shadow: 0 0 0 5px rgba(223, 236, 203, 0.15); animation: pulse 1.7s ease-in-out infinite; }
+      .free-label { padding: 0.43rem 0.6rem; border: 1px solid rgba(240, 197, 106, 0.48); border-radius: 100px; color: var(--citrus); background: rgba(4, 13, 9, 0.53); font-size: 0.65rem; font-weight: 850; letter-spacing: 0.1em; text-transform: uppercase; }
+      .card-bottom h2 { margin: 0.42rem 0 0; font-family: var(--display); font-size: clamp(1.95rem, 3vw, 2.6rem); font-weight: 400; letter-spacing: -0.045em; line-height: 0.95; }
+      .card-bottom p { margin: 0.45rem 0 0; color: #d1d4c9; font-size: 0.78rem; }
+      .round-button { display: inline-flex; align-items: center; justify-content: center; width: 51px; height: 51px; border: 1px solid rgba(245, 241, 232, 0.5); border-radius: 50%; color: var(--ink); background: rgba(7, 15, 11, 0.4); cursor: pointer; transition: transform 170ms ease, background 170ms ease; }
+      .round-button:hover, .round-button:focus-visible { transform: scale(1.06); background: rgba(245, 241, 232, 0.16); }
+      .round-button svg { width: 0.92rem; height: 0.92rem; margin-left: 0.1rem; fill: currentColor; }
+      .edition-card { position: absolute; right: -3.4rem; bottom: -1.3rem; z-index: 4; width: 175px; padding: 0.95rem; transform: rotate(4.5deg); border: 1px solid rgba(245, 241, 232, 0.2); border-radius: 10px; background: #e6dac3; box-shadow: 0 16px 33px rgba(0, 0, 0, 0.34); color: #243227; }
+      .edition-card .tiny-label { margin: 0; color: #64705d; font-size: 0.58rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+      .edition-card strong { display: block; margin-top: 1.55rem; font-family: var(--display); font-size: 1.3rem; font-weight: 400; line-height: 0.94; }
+      .edition-card span { display: block; margin-top: 1.1rem; color: #536053; font-size: 0.64rem; font-weight: 700; }
+
+      .release-ribbon { display: grid; grid-template-columns: 1.3fr repeat(3, 0.8fr); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--line); }
+      .ribbon-item { min-height: 113px; padding: 1.2rem 1.3rem; background: rgba(19, 34, 28, 0.9); }
+      .ribbon-item:first-child { background: linear-gradient(120deg, rgba(41, 71, 55, 0.95), rgba(22, 38, 31, 0.95)); }
+      .ribbon-item p { margin: 0; color: var(--muted); font-size: 0.72rem; font-weight: 720; letter-spacing: 0.075em; text-transform: uppercase; }
+      .ribbon-item strong { display: block; margin-top: 0.55rem; color: var(--ink); font-size: 0.96rem; font-weight: 650; line-height: 1.35; }
+      .ribbon-item .delivery-state { display: flex; align-items: center; gap: 0.45rem; color: var(--moss); }
+      .delivery-state::before { width: 0.48rem; height: 0.48rem; border-radius: 50%; background: currentColor; content: ""; }
+
+      .story { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: clamp(2rem, 7vw, 6.2rem); align-items: start; padding: 112px 0; }
+      .story h2, .access-block h2, .collection-heading h2, .member-prompt h2 { margin: 0.82rem 0 0; font-family: var(--display); font-size: clamp(2.35rem, 4.3vw, 4.2rem); font-weight: 400; letter-spacing: -0.06em; line-height: 0.91; }
+      .story-intro > p:last-child { max-width: 33ch; margin: 1.25rem 0 0; color: var(--muted); font-size: 0.96rem; line-height: 1.75; }
+      .story-list { display: grid; gap: 0.9rem; margin: 0; padding: 0; list-style: none; }
+      .story-list li { display: grid; grid-template-columns: 50px 1fr auto; gap: 1rem; align-items: center; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+      .story-number { color: var(--citrus); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; }
+      .story-list h3 { margin: 0 0 0.2rem; font-family: var(--display); font-size: 1.48rem; font-weight: 400; letter-spacing: -0.035em; }
+      .story-list p { max-width: 39ch; margin: 0; color: var(--muted); font-size: 0.82rem; line-height: 1.55; }
+      .story-length { color: #d5d5c9; font-size: 0.72rem; font-weight: 750; white-space: nowrap; }
+
+      .access-block { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 0.78fr; gap: clamp(2rem, 6vw, 5rem); margin: 0 -999px; padding: 88px max(999px, calc((100vw - min(1180px, calc(100vw - 40px))) / 2)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #101e19; }
+      .access-block::after { position: absolute; top: -120px; right: 6%; width: 330px; height: 330px; border: 1px solid rgba(185, 208, 165, 0.12); border-radius: 50%; box-shadow: -70px 130px 0 -1px rgba(240, 197, 106, 0.05); content: ""; pointer-events: none; }
+      .access-copy { position: relative; z-index: 1; }
+      .access-copy > p:not(.eyebrow) { max-width: 53ch; margin: 1.25rem 0 0; color: var(--muted); line-height: 1.7; }
+      .proof-list { position: relative; z-index: 1; display: grid; align-content: center; gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
+      .proof-list li { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.92rem 1rem; border: 1px solid rgba(185, 208, 165, 0.17); border-radius: 10px; background: rgba(4, 12, 9, 0.25); color: #d9ddd4; font-size: 0.86rem; line-height: 1.5; }
+      .proof-list li::before { flex: 0 0 auto; width: 1.04rem; height: 1.04rem; margin-top: 0.1rem; border-radius: 50%; background: radial-gradient(circle, var(--moss) 0.15rem, transparent 0.18rem); box-shadow: inset 0 0 0 1px rgba(185, 208, 165, 0.7); content: ""; }
+
+      .collection { padding: 112px 0 0; }
+      .collection-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 1.8rem; }
+      .collection-heading h2 { max-width: 11ch; }
+      .collection-heading > p:last-child { max-width: 36ch; margin: 0; color: var(--muted); font-size: 0.91rem; line-height: 1.65; }
+      .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+      .catalog-card { position: relative; min-height: 298px; padding: 1.25rem; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--panel-soft); }
+      .catalog-card::before { position: absolute; inset: 0; opacity: 0.55; content: ""; }
+      .catalog-card:nth-child(1)::before { background: radial-gradient(circle at 80% 15%, rgba(139, 180, 165, 0.55), transparent 34%), linear-gradient(135deg, #254d43, #13241f); }
+      .catalog-card:nth-child(2)::before { background: radial-gradient(circle at 15% 70%, rgba(221, 154, 133, 0.53), transparent 35%), linear-gradient(135deg, #4a3432, #201f1d); }
+      .catalog-card:nth-child(3)::before { background: radial-gradient(circle at 70% 20%, rgba(240, 197, 106, 0.38), transparent 35%), linear-gradient(135deg, #47442c, #20221c); }
+      .catalog-card::after { position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgba(5, 12, 9, 0.86)); content: ""; }
+      .catalog-card > * { position: relative; z-index: 1; }
+      .catalog-card header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+      .catalog-card .type { color: #e3e8dd; font-size: 0.66rem; font-weight: 850; letter-spacing: 0.11em; text-transform: uppercase; }
+      .catalog-card .members-only { display: inline-flex; align-items: center; gap: 0.32rem; color: #e4e1d9; font-size: 0.63rem; font-weight: 750; }
+      .catalog-card h3 { max-width: 9ch; margin: 8.8rem 0 0.45rem; font-family: var(--display); font-size: 1.85rem; font-weight: 400; letter-spacing: -0.045em; line-height: 0.98; }
+      .catalog-card p { max-width: 28ch; margin: 0; color: #d0d1c8; font-size: 0.78rem; line-height: 1.55; }
+      .member-prompt { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; margin-top: 0.9rem; padding: 1.5rem 1.7rem; border: 1px solid rgba(240, 197, 106, 0.3); border-radius: var(--radius-md); background: linear-gradient(105deg, rgba(240, 197, 106, 0.1), rgba(240, 197, 106, 0.02)); }
+      .member-prompt h2 { max-width: 20ch; margin-top: 0.5rem; font-size: clamp(1.55rem, 3vw, 2.35rem); }
+
+      footer { padding: 80px 0 44px; }
+      .footer-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--line); }
+      .footer-top p { max-width: 45ch; margin: 0.8rem 0 0; color: var(--muted-dark); font-size: 0.78rem; line-height: 1.6; }
+      .footer-bottom { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1rem; color: var(--muted-dark); font-size: 0.7rem; }
+      .footer-bottom p { margin: 0; }
+
+      dialog { width: min(840px, calc(100% - 28px)); padding: 0; overflow: hidden; border: 1px solid rgba(245, 241, 232, 0.25); border-radius: 18px; color: var(--ink); background: #0b1512; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.68); }
+      dialog::backdrop { background: rgba(2, 8, 6, 0.78); backdrop-filter: blur(6px); }
+      .dialog-wrap { position: relative; }
+      .dialog-wrap video { display: block; width: 100%; max-height: 72vh; background: #050906; }
+      .dialog-close { position: absolute; z-index: 2; top: 0.85rem; right: 0.85rem; width: 38px; height: 38px; border: 1px solid rgba(245, 241, 232, 0.35); border-radius: 50%; color: var(--ink); background: rgba(7, 15, 11, 0.72); cursor: pointer; font-size: 1.35rem; line-height: 1; }
+      .dialog-info { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.05rem 1.2rem; }
+      .dialog-info strong { display: block; font-family: var(--display); font-size: 1.35rem; font-weight: 400; }
+      .dialog-info p { margin: 0.18rem 0 0; color: var(--muted); font-size: 0.77rem; }
+
+      @keyframes pulse { 50% { transform: scale(0.78); opacity: 0.62; } }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } }
+      @media (max-width: 900px) {
+        .hero { grid-template-columns: 1fr; gap: 2rem; padding-top: 42px; }
+        .hero-copy { max-width: 700px; }
+        .media-stage { width: min(100%, 650px); min-height: 510px; margin-left: auto; }
+        .release-ribbon { grid-template-columns: repeat(2, 1fr); }
+        .story { grid-template-columns: 1fr; }
+        .access-block { grid-template-columns: 1fr; }
+        .catalog-grid { grid-template-columns: 1fr; }
+        .catalog-card { min-height: 250px; }
+        .catalog-card h3 { margin-top: 5.7rem; }
       }
-      .release-frame::after {
-        position: absolute;
-        z-index: 1;
-        inset: auto 0 0;
-        height: 48%;
-        background: linear-gradient(transparent, rgba(5, 11, 9, 0.91));
-        content: "";
-        pointer-events: none;
-      }
-      .release-frame video { display: block; width: 100%; min-height: 470px; object-fit: cover; filter: saturate(0.8) contrast(1.06) brightness(0.8); }
-      .release-caption { position: absolute; z-index: 2; right: 1.7rem; bottom: 1.55rem; left: 1.7rem; display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
-      .release-caption p { margin: 0.45rem 0 0; color: rgba(244, 240, 232, 0.72); font-size: 0.83rem; }
-      .release-caption h2 { margin-bottom: 0; font-family: Georgia, "Times New Roman", serif; font-size: 1.85rem; font-weight: 500; letter-spacing: -0.035em; }
-      .public-stamp { flex: 0 0 auto; padding: 0.55rem 0.7rem; border: 1px solid rgba(236, 193, 108, 0.5); border-radius: 99px; color: var(--sun); background: rgba(13, 21, 18, 0.84); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
-
-      .proof { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1px; overflow: hidden; margin-top: 76px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
-      .proof > section { padding: clamp(1.55rem, 3vw, 2.6rem); background: var(--surface-strong); }
-      .proof h2 { margin: 0.65rem 0 0.7rem; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.7rem, 3vw, 2.45rem); font-weight: 500; letter-spacing: -0.045em; }
-      .proof p { max-width: 58ch; margin-bottom: 0; color: #c5c7bf; line-height: 1.7; }
-      .scope-list { display: grid; gap: 0.75rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
-      .scope-list li { display: flex; align-items: flex-start; gap: 0.7rem; color: #d6d7d0; font-size: 0.9rem; line-height: 1.45; }
-      .scope-list li::before { flex: 0 0 auto; width: 1.1rem; height: 1.1rem; margin-top: 0.1rem; border: 1px solid rgba(168, 198, 173, 0.75); border-radius: 50%; background: radial-gradient(circle, var(--glow) 0.15rem, transparent 0.18rem); content: ""; }
-      .scope-card { display: grid; align-content: center; background: linear-gradient(150deg, #1d2c29, #111b19) !important; }
-      .scope-card .micro { margin-bottom: 0.9rem; color: var(--glow); font-size: 0.73rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
-      .scope-card code { display: block; padding: 1rem; overflow-x: auto; border: 1px solid rgba(168, 198, 173, 0.18); border-radius: 12px; color: #d3e8d6; background: rgba(4, 12, 9, 0.38); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.77rem; line-height: 1.65; white-space: pre-wrap; }
-
-      .examples { padding-top: 88px; }
-      .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 1.75rem; }
-      .section-heading h2 { max-width: 12ch; margin: 0.65rem 0 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.2rem, 4vw, 3.65rem); font-weight: 500; letter-spacing: -0.055em; line-height: 0.96; }
-      .section-heading p { max-width: 36ch; margin: 0; color: var(--muted); line-height: 1.62; }
-      .example-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-      .example {
-        min-height: 270px;
-        padding: 1.45rem;
-        border: 1px solid var(--line);
-        border-radius: 17px;
-        background: var(--surface);
-      }
-      .example:nth-child(1) { background: linear-gradient(155deg, rgba(85, 116, 110, 0.68), rgba(22, 34, 31, 0.94)); }
-      .example:nth-child(2) { background: linear-gradient(155deg, rgba(107, 76, 76, 0.56), rgba(30, 31, 29, 0.94)); }
-      .example:nth-child(3) { background: linear-gradient(155deg, rgba(92, 88, 59, 0.58), rgba(28, 32, 28, 0.94)); }
-      .example-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: #ddd9d0; font-size: 0.74rem; font-weight: 750; letter-spacing: 0.1em; text-transform: uppercase; }
-      .state { padding: 0.35rem 0.5rem; border-radius: 99px; background: rgba(10, 17, 15, 0.4); font-size: 0.62rem; }
-      .state.live { color: #c5e0c9; }
-      .state.preview { color: #f3d49c; }
-      .example h3 { max-width: 12ch; margin: 3.6rem 0 0.7rem; font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 500; letter-spacing: -0.045em; line-height: 1; }
-      .example p { margin: 0; color: #d0cec6; font-size: 0.86rem; line-height: 1.6; }
-      .example a { display: inline-block; margin-top: 1rem; color: var(--sun); font-size: 0.83rem; font-weight: 750; text-decoration: none; }
-      .example a:hover, .example a:focus-visible { text-decoration: underline; }
-
-      .closing { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; margin: 84px 0 0; padding: clamp(1.6rem, 4vw, 3rem); border: 1px solid rgba(236, 193, 108, 0.32); border-radius: var(--radius); background: linear-gradient(110deg, rgba(236, 193, 108, 0.13), rgba(236, 193, 108, 0.02)); }
-      .closing h2 { max-width: 18ch; margin: 0.65rem 0 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.8rem, 3.4vw, 3rem); font-weight: 500; letter-spacing: -0.05em; line-height: 0.98; }
-      footer { padding: 38px 0 54px; color: #858982; font-size: 0.78rem; }
-      footer .shell { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); padding-top: 1.4rem; }
-      footer p { margin: 0; }
-
-      @media (max-width: 850px) {
-        .hero { grid-template-columns: 1fr; padding-top: 20px; }
-        h1 { max-width: 12ch; }
-        .release-frame { max-width: 640px; }
-        .proof { grid-template-columns: 1fr; }
-        .example-grid { grid-template-columns: 1fr; }
-        .example { min-height: 220px; }
-        .example h3 { margin-top: 2.4rem; }
-      }
-      @media (max-width: 590px) {
+      @media (max-width: 620px) {
         .shell { width: min(100% - 28px, 1180px); }
-        .nav-links a:not(.catalog-lock) { display: none; }
-        header { padding-top: 20px; }
-        .notice .shell { padding: 0.45rem 0; }
-        .hero { gap: 2rem; }
-        .release-frame video { min-height: 390px; }
-        .release-caption { right: 1rem; bottom: 1rem; left: 1rem; align-items: flex-start; flex-direction: column; }
-        .section-heading, .closing, footer .shell { align-items: flex-start; flex-direction: column; }
+        .site-header { padding-top: 14px; }
+        .nav-links > a:not(.library-lock) { display: none; }
+        .brand { font-size: 0.71rem; }
+        .hero { min-height: 0; padding: 30px 0 54px; }
+        h1 { font-size: clamp(3.3rem, 17vw, 4.8rem); }
+        .film-card { inset: 0 16px 0 0; }
+        .media-stage { min-height: 430px; }
+        .edition-card { right: -0.5rem; bottom: -1.4rem; width: 142px; }
+        .release-ribbon { grid-template-columns: 1fr; }
+        .ribbon-item { min-height: auto; }
+        .story, .collection { padding-top: 76px; }
+        .story { padding-bottom: 76px; }
+        .access-block { padding-top: 68px; padding-bottom: 68px; }
+        .collection-heading, .member-prompt, .footer-top, .footer-bottom { align-items: flex-start; flex-direction: column; }
+        .collection-heading { gap: 1rem; }
+        .member-prompt { gap: 1.2rem; }
+        .story-list li { grid-template-columns: 36px 1fr; }
+        .story-length { grid-column: 2; }
+        .card-top, .card-bottom { left: 1rem; right: 1rem; }
       }
     </style>
   </head>
   <body>
-    <aside class="notice" aria-label="Prototype note">
-      <div class="shell"><strong>Prototype:</strong> the media is a CC0 browser sample; production delivery stays behind a scoped signed-URL route.</div>
+    <a class="skip-link" href="#main-content">Skip to release</a>
+    <aside class="prototype-bar" aria-label="Prototype note">
+      <div class="shell"><strong>Prototype:</strong> visual sample media only. A production release retrieves a short-lived delivery URL through the scoped server route.</div>
     </aside>
 
-    <header class="shell">
+    <header class="site-header shell">
       <nav class="nav" aria-label="Primary navigation">
         <a class="brand" href="#top" aria-label="Lumen Archive home"><span class="brand-mark" aria-hidden="true"></span>Lumen Archive</a>
         <div class="nav-links">
-          <a href="#release">Free release</a>
-          <a href="#examples">Examples</a>
-          <a class="catalog-lock" href="#scope"><span class="lock-icon" aria-hidden="true"></span>Catalog protected</a>
+          <a href="#release">The release</a>
+          <a href="#collection">The archive</a>
+          <a class="library-lock" href="#access"><span class="lock-icon" aria-hidden="true"></span>Members’ library</a>
         </div>
       </nav>
     </header>
 
-    <main id="top" class="shell">
-      <section id="release" class="hero" aria-labelledby="release-title">
+    <main id="main-content" tabindex="-1">
+      <section id="release" class="hero shell" aria-labelledby="release-title">
         <div class="hero-copy">
-          <p class="eyebrow">One public release · no account needed</p>
+          <p class="eyebrow">Free public release · no account required</p>
           <h1 id="release-title">Bloom after dark.</h1>
-          <p>Watch a short garden study, released free for everyone. This is the only item exposed to anonymous visitors; the members’ library remains exactly as it was.</p>
-          <div class="detail-line" aria-label="Release details">
-            <span>Short film</span>
-            <span>00:05</span>
-            <span>MP4 download</span>
-          </div>
-          <div class="button-row" aria-label="Release actions">
-            <a id="watch-release" class="button button-primary" aria-disabled="true" target="_blank" rel="noopener noreferrer">
+          <p>A quiet garden study about staying present long enough to notice a small, extraordinary thing. Released freely for the Lumen Archive community.</p>
+          <ul class="release-meta" aria-label="Release metadata">
+            <li>Short film</li>
+            <li>00:05</li>
+            <li>HD MP4</li>
+            <li>2026 edition</li>
+          </ul>
+          <div class="action-row" aria-label="Release actions">
+            <button id="preview-release" class="button button-primary" type="button">
               <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8c0-1.1 1.22-1.77 2.15-1.18l8.18 5.2a2.2 2.2 0 0 1 0 3.72l-8.18 5.2A1.4 1.4 0 0 1 5 15.56V3.8Z"/></svg>
-              <span data-watch-label>Preparing release</span>
-            </a>
+              Preview the film
+            </button>
             <a id="download-release" class="button button-secondary" aria-disabled="true" download="bloom-after-dark.mp4">
               <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M9 2h2v8.1l2.56-2.55L15 9l-5 5-5-5 1.44-1.45L9 10.1V2ZM3 16h14v2H3v-2Z"/></svg>
               <span data-download-label>Preparing download</span>
             </a>
+            <button id="share-release" class="button button-tertiary" type="button" aria-live="polite">Share release</button>
           </div>
         </div>
 
-        <div class="release-frame" aria-label="Bloom after dark video preview">
-          <video muted autoplay loop playsinline preload="metadata" aria-label="A close-up of a flower moving in the breeze">
-            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
-          </video>
-          <div class="release-caption">
-            <div>
-              <span class="eyebrow">Public now</span>
-              <h2>Bloom after dark</h2>
-              <p>Released for the Lumen Archive community</p>
+        <div class="media-stage" aria-label="Bloom after dark release preview">
+          <div class="film-card">
+            <video muted autoplay loop playsinline preload="metadata" aria-label="A flower moving in the breeze">
+              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+            </video>
+            <div class="card-top">
+              <span class="now-playing"><span class="pulse" aria-hidden="true"></span>Now showing</span>
+              <span class="free-label">Free access</span>
             </div>
-            <span class="public-stamp">Free access</span>
+            <div class="card-bottom">
+              <div>
+                <p class="eyebrow">Lumen original no. 01</p>
+                <h2>Bloom after dark</h2>
+                <p>A five-second garden study · 2026</p>
+              </div>
+              <button id="stage-play" class="round-button" type="button" aria-label="Preview Bloom after dark">
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8c0-1.1 1.22-1.77 2.15-1.18l8.18 5.2a2.2 2.2 0 0 1 0 3.72l-8.18 5.2A1.4 1.4 0 0 1 5 15.56V3.8Z"/></svg>
+              </button>
+            </div>
           </div>
+          <aside class="edition-card" aria-label="Release edition note">
+            <p class="tiny-label">Public edition</p>
+            <strong>For late walkers &amp; early risers.</strong>
+            <span>Published 08.25.26</span>
+          </aside>
         </div>
       </section>
 
-      <section id="scope" class="proof" aria-labelledby="scope-title">
-        <section>
-          <p class="eyebrow">The important boundary</p>
-          <h2 id="scope-title">Public does not mean the catalog is public.</h2>
-          <p>The release page has one job: request delivery for a fixed, named upload. It never accepts an arbitrary title or exposes storage details, so an anonymous visit cannot become a catalog browser.</p>
-          <ul class="scope-list">
-            <li>Only <strong>Bloom after dark</strong> is eligible for anonymous delivery.</li>
-            <li>Watch and download controls wait for a temporary delivery URL.</li>
-            <li>Every other release still follows the existing sign-in or checkout path.</li>
-          </ul>
-        </section>
-        <section class="scope-card" aria-label="Scoped delivery rule">
-          <p class="micro">Server-side rule</p>
-          <code>fixed slug: bloom-after-dark
-access model: public
-source type: upload
-media key: server only
-
-otherwise: NOT_FOUND</code>
-        </section>
+      <section class="release-ribbon shell" aria-label="Release information">
+        <div class="ribbon-item">
+          <p>Access state</p>
+          <strong class="delivery-state" data-delivery-status>Preparing a secure delivery link</strong>
+        </div>
+        <div class="ribbon-item">
+          <p>Release type</p>
+          <strong>Public premiere</strong>
+        </div>
+        <div class="ribbon-item">
+          <p>By</p>
+          <strong>Lumen Archive Studio</strong>
+        </div>
+        <div class="ribbon-item">
+          <p>Download</p>
+          <strong>MP4 · 2.8 MB</strong>
+        </div>
       </section>
 
-      <section id="examples" class="examples" aria-labelledby="examples-title">
-        <div class="section-heading">
+      <section class="story shell" aria-labelledby="story-title">
+        <div class="story-intro">
+          <p class="eyebrow">Inside the release</p>
+          <h2 id="story-title">A small film with room to breathe.</h2>
+          <p>This public edition is designed as a complete miniature—not a locked trailer. It gives new visitors a real reason to stay, then points quietly toward an archive made for slower looking.</p>
+        </div>
+        <ol class="story-list">
+          <li>
+            <span class="story-number">01</span>
+            <div><h3>Look closer</h3><p>A saturated close-up turns a passing detail into the whole frame.</p></div>
+            <span class="story-length">00:00–00:02</span>
+          </li>
+          <li>
+            <span class="story-number">02</span>
+            <div><h3>Let it move</h3><p>Motion is kept gentle so the release feels meditative, not promotional.</p></div>
+            <span class="story-length">00:02–00:04</span>
+          </li>
+          <li>
+            <span class="story-number">03</span>
+            <div><h3>Carry it with you</h3><p>A direct download makes the public edition easy to keep or share offline.</p></div>
+            <span class="story-length">00:04–00:05</span>
+          </li>
+        </ol>
+      </section>
+
+      <section id="access" class="access-block" aria-labelledby="access-title">
+        <div class="access-copy">
+          <p class="eyebrow">The access promise</p>
+          <h2 id="access-title">Free to watch. Narrow by design.</h2>
+          <p>Only this named, uploaded release is available without sign-in. The rest of the archive is not exposed by the public page, and its media keys never reach the browser.</p>
+        </div>
+        <ul class="proof-list">
+          <li>The anonymous route has no visitor-controlled slug or ID.</li>
+          <li>It verifies this release is public, free, and an uploaded file before delivery.</li>
+          <li>The temporary URL enables viewing and download without widening catalog access.</li>
+        </ul>
+      </section>
+
+      <section id="collection" class="collection shell" aria-labelledby="collection-title">
+        <div class="collection-heading">
           <div>
-            <p class="eyebrow">Three release patterns</p>
-            <h2 id="examples-title">A free premiere can still feel intentional.</h2>
+            <p class="eyebrow">Beyond this public edition</p>
+            <h2 id="collection-title">The archive stays personal.</h2>
           </div>
-          <p>Each scenario gives visitors a clean, credible first experience while retaining the same narrow access boundary.</p>
+          <p>These member-only releases show how a public premiere can sit beside a protected body of work without blurring the boundary between them.</p>
         </div>
-        <div class="example-grid">
-          <article class="example">
-            <div class="example-top"><span>Artist premiere</span><span class="state live">Live example</span></div>
-            <h3>Bloom after dark</h3>
-            <p>A single short film is a generous welcome gift and a focused invitation into a larger archive.</p>
-            <a href="#release">View the live pattern →</a>
+        <div class="catalog-grid" aria-label="Members-only catalog preview">
+          <article class="catalog-card">
+            <header><span class="type">Field journal</span><span class="members-only"><span class="lock-icon" aria-hidden="true"></span>Members</span></header>
+            <h3>Woodland weather</h3>
+            <p>A six-part collection of trails, rain, and quiet weather systems.</p>
           </article>
-          <article class="example">
-            <div class="example-top"><span>Festival takeaway</span><span class="state preview">Scenario</span></div>
-            <h3>First light: director Q&amp;A</h3>
-            <p>Release one conversation after a premiere, with a safe download for audiences who could not attend.</p>
-            <a href="#scope">See the access boundary →</a>
+          <article class="catalog-card">
+            <header><span class="type">Studio essay</span><span class="members-only"><span class="lock-icon" aria-hidden="true"></span>Members</span></header>
+            <h3>The long exposure</h3>
+            <p>Notes on making an image when the light changes faster than the plan.</p>
           </article>
-          <article class="example">
-            <div class="example-top"><span>Community edition</span><span class="state preview">Scenario</span></div>
-            <h3>Field notes: autumn session</h3>
-            <p>Offer one chapter from a paid documentary or audio series without changing the rights of the rest.</p>
-            <a href="#scope">See the access boundary →</a>
+          <article class="catalog-card">
+            <header><span class="type">Listening room</span><span class="members-only"><span class="lock-icon" aria-hidden="true"></span>Members</span></header>
+            <h3>Half an hour of green</h3>
+            <p>A focused audio field recording for a slow afternoon indoors.</p>
           </article>
         </div>
-      </section>
-
-      <section class="closing" aria-labelledby="closing-title">
-        <div>
-          <p class="eyebrow">Built for a true public release</p>
-          <h2 id="closing-title">One named release. Free to watch. Safe to share.</h2>
+        <div class="member-prompt">
+          <div>
+            <p class="eyebrow">The full collection</p>
+            <h2>Public releases invite. Membership keeps the archive close.</h2>
+          </div>
+          <a class="button button-secondary" href="#access">How access stays protected</a>
         </div>
-        <a class="button button-primary" href="#release">Return to release</a>
       </section>
     </main>
 
-    <footer>
-      <div class="shell">
-        <p>Lumen Archive — free public release workflow demonstration.</p>
-        <p>Prototype media: MDN CC0 flower sample.</p>
+    <footer class="shell">
+      <div class="footer-top">
+        <div>
+          <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>Lumen Archive</a>
+          <p>Free public-release workflow demonstration. The preview uses sample media; a real release would use a user-supplied upload and protected storage delivery.</p>
+        </div>
+        <button id="footer-share" class="button button-tertiary" type="button">Copy release link</button>
       </div>
+      <div class="footer-bottom"><p>© 2026 Lumen Archive.</p><p>One named release. The rest remains protected.</p></div>
     </footer>
+
+    <dialog id="preview-dialog" aria-labelledby="preview-dialog-title">
+      <div class="dialog-wrap">
+        <button id="close-preview" class="dialog-close" type="button" aria-label="Close video preview">×</button>
+        <video id="dialog-video" controls playsinline preload="metadata" aria-label="Bloom after dark video preview">
+          <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+        </video>
+        <div class="dialog-info">
+          <div><strong id="preview-dialog-title">Bloom after dark</strong><p>Public edition · short film · 00:05</p></div>
+          <a id="watch-release" class="button button-primary" aria-disabled="true" target="_blank" rel="noopener noreferrer">Watch in a new tab</a>
+        </div>
+      </div>
+    </dialog>
 
     <script>
       (() => {
-        const demoSignedDeliveryUrl = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
-        const watch = document.querySelector("#watch-release");
+        const deliveryUrl = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+        const dialog = document.querySelector("#preview-dialog");
+        const dialogVideo = document.querySelector("#dialog-video");
+        const previewTriggers = [document.querySelector("#preview-release"), document.querySelector("#stage-play")];
+        const closePreview = document.querySelector("#close-preview");
         const download = document.querySelector("#download-release");
-        const watchLabel = document.querySelector("[data-watch-label]");
+        const watch = document.querySelector("#watch-release");
         const downloadLabel = document.querySelector("[data-download-label]");
+        const deliveryStatus = document.querySelector("[data-delivery-status]");
+        const shareButtons = [document.querySelector("#share-release"), document.querySelector("#footer-share")];
 
-        // This visual prototype simulates a delivery URL resolving after a scoped server request.
-        // In production, the URL must come from a public procedure that has no user-supplied slug input.
+        const openPreview = () => {
+          dialog.showModal();
+          dialogVideo.play().catch(() => undefined);
+          closePreview.focus();
+        };
+        const closeDialog = () => {
+          dialogVideo.pause();
+          dialog.close();
+        };
+        previewTriggers.forEach((trigger) => trigger.addEventListener("click", openPreview));
+        closePreview.addEventListener("click", closeDialog);
+        dialog.addEventListener("click", (event) => { if (event.target === dialog) closeDialog(); });
+
+        shareButtons.forEach((button) => {
+          button.addEventListener("click", async () => {
+            const priorText = button.textContent;
+            try {
+              await navigator.clipboard.writeText(window.location.href.split("#")[0] + "#release");
+              button.textContent = "Link copied";
+            } catch {
+              button.textContent = "Copy link from address bar";
+            }
+            window.setTimeout(() => { button.textContent = priorText; }, 2200);
+          });
+        });
+
+        // The static prototype simulates delivery resolving from a fixed-slug, server-side procedure.
+        // A real route must not receive an arbitrary slug, record ID, storage key, or direct media URL from the visitor.
         window.setTimeout(() => {
-          watch.href = demoSignedDeliveryUrl;
-          download.href = demoSignedDeliveryUrl;
-          watch.setAttribute("aria-disabled", "false");
+          download.href = deliveryUrl;
+          watch.href = deliveryUrl;
           download.setAttribute("aria-disabled", "false");
-          watchLabel.textContent = "Watch release";
+          watch.setAttribute("aria-disabled", "false");
           downloadLabel.textContent = "Download MP4";
-        }, 500);
+          deliveryStatus.textContent = "Secure delivery link ready";
+        }, 550);
       })();
     </script>
   </body>
