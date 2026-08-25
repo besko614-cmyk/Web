@@ -1,74 +1,402 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Simple Website</title>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A static demonstration of a single free public video release while the wider catalog remains protected."
+    />
+    <title>Lumen Archive — Public Release Demo</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        header {
-            background: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .avatar {
-            display: block;
-            width: 112px;
-            height: 112px;
-            margin: 0 auto 14px;
-            border: 4px solid white;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center top;
-            background: #111;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
-        }
-        nav a {
-            margin: 0 15px;
-            color: white;
-            text-decoration: none;
-        }
-        main {
-            padding: 20px;
-        }
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #666;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <img class="avatar" src="assets/yoda-avatar.jpg" alt="Yoda avatar">
-        <h1>Welcome to My Website</h1>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
-    
-    <main>
-        <h2>Hello!</h2>
-        <p>This is a simple website. You can edit this text and add your own content.</p>
-        
-        <h3>Features:</h3>
-        <ul>
-            <li>Responsive design</li>
-            <li>Clean layout</li>
-            <li>Easy to customize</li>
-        </ul>
-    </main>
-    
-    <footer>
-        <p>&copy; 2024 My Simple Website</p>
-    </footer>
-</body>
-</html>
+      :root {
+        color-scheme: dark;
+        --ink: #f4f0e8;
+        --muted: #aaa79f;
+        --night: #101817;
+        --surface: rgba(28, 40, 38, 0.78);
+        --surface-strong: #1a2725;
+        --line: rgba(244, 240, 232, 0.15);
+        --sun: #ecc16c;
+        --glow: #a8c6ad;
+        --rose: #e4a5a0;
+        --radius: 24px;
+      }
 
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 85% -5%, rgba(91, 142, 118, 0.29), transparent 28rem),
+          radial-gradient(circle at 5% 20%, rgba(228, 165, 160, 0.12), transparent 30rem),
+          var(--night);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      a { color: inherit; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.58rem;
+        color: var(--sun);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .eyebrow::before {
+        width: 0.56rem;
+        height: 0.56rem;
+        border-radius: 50%;
+        background: currentColor;
+        box-shadow: 0 0 0 5px rgba(236, 193, 108, 0.14);
+        content: "";
+      }
+
+      .notice {
+        border-bottom: 1px solid var(--line);
+        background: rgba(7, 13, 12, 0.48);
+      }
+      .notice .shell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        min-height: 42px;
+        color: #d8d5cd;
+        font-size: 0.8rem;
+        text-align: center;
+      }
+      .notice strong { color: var(--sun); }
+
+      header { padding: 30px 0 24px; }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.85rem;
+        color: var(--ink);
+        font-size: 0.86rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      .brand-mark {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+        border: 1px solid var(--sun);
+        border-radius: 50%;
+      }
+      .brand-mark::before, .brand-mark::after {
+        position: absolute;
+        border-radius: 50%;
+        content: "";
+      }
+      .brand-mark::before { inset: 6px; background: var(--sun); }
+      .brand-mark::after { width: 19px; height: 19px; right: -6px; bottom: -4px; background: var(--night); }
+      .nav-links { display: flex; align-items: center; gap: 1.55rem; }
+      .nav-links a {
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 650;
+        text-decoration: none;
+      }
+      .nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); }
+      .catalog-lock {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.48rem 0.75rem;
+        border: 1px solid var(--line);
+        border-radius: 99px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 750;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .lock-icon { width: 0.7rem; height: 0.62rem; border: 1.5px solid currentColor; border-radius: 2px; }
+      .lock-icon::before { display: block; width: 0.38rem; height: 0.36rem; margin: -0.43rem auto 0; border: 1.5px solid currentColor; border-bottom: 0; border-radius: 8px 8px 0 0; content: ""; }
+
+      main { padding: 22px 0 80px; }
+      .hero { display: grid; grid-template-columns: minmax(0, 0.88fr) minmax(390px, 1.12fr); gap: clamp(2.4rem, 7vw, 6.8rem); align-items: center; min-height: 540px; }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 {
+        max-width: 10ch;
+        margin: 1.15rem 0 1.5rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(3.2rem, 6.1vw, 5.8rem);
+        font-weight: 500;
+        letter-spacing: -0.065em;
+        line-height: 0.92;
+      }
+      .hero-copy > p:not(.eyebrow) { max-width: 48ch; color: #c8c6be; font-size: 1.05rem; line-height: 1.72; }
+      .detail-line { display: flex; flex-wrap: wrap; gap: 0.8rem 1.25rem; margin: 1.75rem 0 2rem; color: var(--muted); font-size: 0.86rem; }
+      .detail-line span { display: inline-flex; align-items: center; gap: 0.42rem; }
+      .detail-line span::before { width: 4px; height: 4px; border-radius: 100%; background: var(--sun); content: ""; }
+      .button-row { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.62rem;
+        min-height: 48px;
+        padding: 0.75rem 1.15rem;
+        border: 1px solid transparent;
+        border-radius: 9px;
+        font: inherit;
+        font-size: 0.88rem;
+        font-weight: 780;
+        text-decoration: none;
+        transition: transform 170ms ease, background 170ms ease, border-color 170ms ease, opacity 170ms ease;
+      }
+      .button:hover:not([aria-disabled="true"]), .button:focus-visible:not([aria-disabled="true"]) { transform: translateY(-2px); }
+      .button-primary { color: #171a14; background: var(--sun); }
+      .button-primary:hover, .button-primary:focus-visible { background: #f7d484; }
+      .button-secondary { border-color: rgba(244, 240, 232, 0.35); color: var(--ink); background: rgba(244, 240, 232, 0.04); }
+      .button-secondary:hover, .button-secondary:focus-visible { border-color: var(--ink); background: rgba(244, 240, 232, 0.09); }
+      .button[aria-disabled="true"] { cursor: wait; opacity: 0.48; pointer-events: none; }
+      .button svg { width: 0.95rem; height: 0.95rem; fill: currentColor; }
+
+      .release-frame {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(244, 240, 232, 0.2);
+        border-radius: var(--radius);
+        background: #0a100e;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.34);
+      }
+      .release-frame::after {
+        position: absolute;
+        z-index: 1;
+        inset: auto 0 0;
+        height: 48%;
+        background: linear-gradient(transparent, rgba(5, 11, 9, 0.91));
+        content: "";
+        pointer-events: none;
+      }
+      .release-frame video { display: block; width: 100%; min-height: 470px; object-fit: cover; filter: saturate(0.8) contrast(1.06) brightness(0.8); }
+      .release-caption { position: absolute; z-index: 2; right: 1.7rem; bottom: 1.55rem; left: 1.7rem; display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
+      .release-caption p { margin: 0.45rem 0 0; color: rgba(244, 240, 232, 0.72); font-size: 0.83rem; }
+      .release-caption h2 { margin-bottom: 0; font-family: Georgia, "Times New Roman", serif; font-size: 1.85rem; font-weight: 500; letter-spacing: -0.035em; }
+      .public-stamp { flex: 0 0 auto; padding: 0.55rem 0.7rem; border: 1px solid rgba(236, 193, 108, 0.5); border-radius: 99px; color: var(--sun); background: rgba(13, 21, 18, 0.84); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
+
+      .proof { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1px; overflow: hidden; margin-top: 76px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
+      .proof > section { padding: clamp(1.55rem, 3vw, 2.6rem); background: var(--surface-strong); }
+      .proof h2 { margin: 0.65rem 0 0.7rem; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.7rem, 3vw, 2.45rem); font-weight: 500; letter-spacing: -0.045em; }
+      .proof p { max-width: 58ch; margin-bottom: 0; color: #c5c7bf; line-height: 1.7; }
+      .scope-list { display: grid; gap: 0.75rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+      .scope-list li { display: flex; align-items: flex-start; gap: 0.7rem; color: #d6d7d0; font-size: 0.9rem; line-height: 1.45; }
+      .scope-list li::before { flex: 0 0 auto; width: 1.1rem; height: 1.1rem; margin-top: 0.1rem; border: 1px solid rgba(168, 198, 173, 0.75); border-radius: 50%; background: radial-gradient(circle, var(--glow) 0.15rem, transparent 0.18rem); content: ""; }
+      .scope-card { display: grid; align-content: center; background: linear-gradient(150deg, #1d2c29, #111b19) !important; }
+      .scope-card .micro { margin-bottom: 0.9rem; color: var(--glow); font-size: 0.73rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+      .scope-card code { display: block; padding: 1rem; overflow-x: auto; border: 1px solid rgba(168, 198, 173, 0.18); border-radius: 12px; color: #d3e8d6; background: rgba(4, 12, 9, 0.38); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.77rem; line-height: 1.65; white-space: pre-wrap; }
+
+      .examples { padding-top: 88px; }
+      .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 1.75rem; }
+      .section-heading h2 { max-width: 12ch; margin: 0.65rem 0 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.2rem, 4vw, 3.65rem); font-weight: 500; letter-spacing: -0.055em; line-height: 0.96; }
+      .section-heading p { max-width: 36ch; margin: 0; color: var(--muted); line-height: 1.62; }
+      .example-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      .example {
+        min-height: 270px;
+        padding: 1.45rem;
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        background: var(--surface);
+      }
+      .example:nth-child(1) { background: linear-gradient(155deg, rgba(85, 116, 110, 0.68), rgba(22, 34, 31, 0.94)); }
+      .example:nth-child(2) { background: linear-gradient(155deg, rgba(107, 76, 76, 0.56), rgba(30, 31, 29, 0.94)); }
+      .example:nth-child(3) { background: linear-gradient(155deg, rgba(92, 88, 59, 0.58), rgba(28, 32, 28, 0.94)); }
+      .example-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: #ddd9d0; font-size: 0.74rem; font-weight: 750; letter-spacing: 0.1em; text-transform: uppercase; }
+      .state { padding: 0.35rem 0.5rem; border-radius: 99px; background: rgba(10, 17, 15, 0.4); font-size: 0.62rem; }
+      .state.live { color: #c5e0c9; }
+      .state.preview { color: #f3d49c; }
+      .example h3 { max-width: 12ch; margin: 3.6rem 0 0.7rem; font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 500; letter-spacing: -0.045em; line-height: 1; }
+      .example p { margin: 0; color: #d0cec6; font-size: 0.86rem; line-height: 1.6; }
+      .example a { display: inline-block; margin-top: 1rem; color: var(--sun); font-size: 0.83rem; font-weight: 750; text-decoration: none; }
+      .example a:hover, .example a:focus-visible { text-decoration: underline; }
+
+      .closing { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; margin: 84px 0 0; padding: clamp(1.6rem, 4vw, 3rem); border: 1px solid rgba(236, 193, 108, 0.32); border-radius: var(--radius); background: linear-gradient(110deg, rgba(236, 193, 108, 0.13), rgba(236, 193, 108, 0.02)); }
+      .closing h2 { max-width: 18ch; margin: 0.65rem 0 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.8rem, 3.4vw, 3rem); font-weight: 500; letter-spacing: -0.05em; line-height: 0.98; }
+      footer { padding: 38px 0 54px; color: #858982; font-size: 0.78rem; }
+      footer .shell { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); padding-top: 1.4rem; }
+      footer p { margin: 0; }
+
+      @media (max-width: 850px) {
+        .hero { grid-template-columns: 1fr; padding-top: 20px; }
+        h1 { max-width: 12ch; }
+        .release-frame { max-width: 640px; }
+        .proof { grid-template-columns: 1fr; }
+        .example-grid { grid-template-columns: 1fr; }
+        .example { min-height: 220px; }
+        .example h3 { margin-top: 2.4rem; }
+      }
+      @media (max-width: 590px) {
+        .shell { width: min(100% - 28px, 1180px); }
+        .nav-links a:not(.catalog-lock) { display: none; }
+        header { padding-top: 20px; }
+        .notice .shell { padding: 0.45rem 0; }
+        .hero { gap: 2rem; }
+        .release-frame video { min-height: 390px; }
+        .release-caption { right: 1rem; bottom: 1rem; left: 1rem; align-items: flex-start; flex-direction: column; }
+        .section-heading, .closing, footer .shell { align-items: flex-start; flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="notice" aria-label="Prototype note">
+      <div class="shell"><strong>Prototype:</strong> the media is a CC0 browser sample; production delivery stays behind a scoped signed-URL route.</div>
+    </aside>
+
+    <header class="shell">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Lumen Archive home"><span class="brand-mark" aria-hidden="true"></span>Lumen Archive</a>
+        <div class="nav-links">
+          <a href="#release">Free release</a>
+          <a href="#examples">Examples</a>
+          <a class="catalog-lock" href="#scope"><span class="lock-icon" aria-hidden="true"></span>Catalog protected</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top" class="shell">
+      <section id="release" class="hero" aria-labelledby="release-title">
+        <div class="hero-copy">
+          <p class="eyebrow">One public release · no account needed</p>
+          <h1 id="release-title">Bloom after dark.</h1>
+          <p>Watch a short garden study, released free for everyone. This is the only item exposed to anonymous visitors; the members’ library remains exactly as it was.</p>
+          <div class="detail-line" aria-label="Release details">
+            <span>Short film</span>
+            <span>00:05</span>
+            <span>MP4 download</span>
+          </div>
+          <div class="button-row" aria-label="Release actions">
+            <a id="watch-release" class="button button-primary" aria-disabled="true" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8c0-1.1 1.22-1.77 2.15-1.18l8.18 5.2a2.2 2.2 0 0 1 0 3.72l-8.18 5.2A1.4 1.4 0 0 1 5 15.56V3.8Z"/></svg>
+              <span data-watch-label>Preparing release</span>
+            </a>
+            <a id="download-release" class="button button-secondary" aria-disabled="true" download="bloom-after-dark.mp4">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M9 2h2v8.1l2.56-2.55L15 9l-5 5-5-5 1.44-1.45L9 10.1V2ZM3 16h14v2H3v-2Z"/></svg>
+              <span data-download-label>Preparing download</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="release-frame" aria-label="Bloom after dark video preview">
+          <video muted autoplay loop playsinline preload="metadata" aria-label="A close-up of a flower moving in the breeze">
+            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+          </video>
+          <div class="release-caption">
+            <div>
+              <span class="eyebrow">Public now</span>
+              <h2>Bloom after dark</h2>
+              <p>Released for the Lumen Archive community</p>
+            </div>
+            <span class="public-stamp">Free access</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="scope" class="proof" aria-labelledby="scope-title">
+        <section>
+          <p class="eyebrow">The important boundary</p>
+          <h2 id="scope-title">Public does not mean the catalog is public.</h2>
+          <p>The release page has one job: request delivery for a fixed, named upload. It never accepts an arbitrary title or exposes storage details, so an anonymous visit cannot become a catalog browser.</p>
+          <ul class="scope-list">
+            <li>Only <strong>Bloom after dark</strong> is eligible for anonymous delivery.</li>
+            <li>Watch and download controls wait for a temporary delivery URL.</li>
+            <li>Every other release still follows the existing sign-in or checkout path.</li>
+          </ul>
+        </section>
+        <section class="scope-card" aria-label="Scoped delivery rule">
+          <p class="micro">Server-side rule</p>
+          <code>fixed slug: bloom-after-dark
+access model: public
+source type: upload
+media key: server only
+
+otherwise: NOT_FOUND</code>
+        </section>
+      </section>
+
+      <section id="examples" class="examples" aria-labelledby="examples-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Three release patterns</p>
+            <h2 id="examples-title">A free premiere can still feel intentional.</h2>
+          </div>
+          <p>Each scenario gives visitors a clean, credible first experience while retaining the same narrow access boundary.</p>
+        </div>
+        <div class="example-grid">
+          <article class="example">
+            <div class="example-top"><span>Artist premiere</span><span class="state live">Live example</span></div>
+            <h3>Bloom after dark</h3>
+            <p>A single short film is a generous welcome gift and a focused invitation into a larger archive.</p>
+            <a href="#release">View the live pattern →</a>
+          </article>
+          <article class="example">
+            <div class="example-top"><span>Festival takeaway</span><span class="state preview">Scenario</span></div>
+            <h3>First light: director Q&amp;A</h3>
+            <p>Release one conversation after a premiere, with a safe download for audiences who could not attend.</p>
+            <a href="#scope">See the access boundary →</a>
+          </article>
+          <article class="example">
+            <div class="example-top"><span>Community edition</span><span class="state preview">Scenario</span></div>
+            <h3>Field notes: autumn session</h3>
+            <p>Offer one chapter from a paid documentary or audio series without changing the rights of the rest.</p>
+            <a href="#scope">See the access boundary →</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="closing" aria-labelledby="closing-title">
+        <div>
+          <p class="eyebrow">Built for a true public release</p>
+          <h2 id="closing-title">One named release. Free to watch. Safe to share.</h2>
+        </div>
+        <a class="button button-primary" href="#release">Return to release</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell">
+        <p>Lumen Archive — free public release workflow demonstration.</p>
+        <p>Prototype media: MDN CC0 flower sample.</p>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const demoSignedDeliveryUrl = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+        const watch = document.querySelector("#watch-release");
+        const download = document.querySelector("#download-release");
+        const watchLabel = document.querySelector("[data-watch-label]");
+        const downloadLabel = document.querySelector("[data-download-label]");
+
+        // This visual prototype simulates a delivery URL resolving after a scoped server request.
+        // In production, the URL must come from a public procedure that has no user-supplied slug input.
+        window.setTimeout(() => {
+          watch.href = demoSignedDeliveryUrl;
+          download.href = demoSignedDeliveryUrl;
+          watch.setAttribute("aria-disabled", "false");
+          download.setAttribute("aria-disabled", "false");
+          watchLabel.textContent = "Watch release";
+          downloadLabel.textContent = "Download MP4";
+        }, 500);
+      })();
+    </script>
+  </body>
+</html>
